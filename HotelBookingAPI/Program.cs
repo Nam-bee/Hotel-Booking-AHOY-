@@ -43,11 +43,11 @@ using (var context = new HotelBookingContext(contextOptions))
        };
     context.Facilities.AddRange(facilities);
     List<Hotel> hotels = new List<Hotel>{
-        new Hotel { HotelId =1, Description = "Atlantis The Palm, Dubai is a luxury hotel resort located at the apex of the Palm Jumeirah in the United Arab Emirates. It was the first resort to be built on the island", 
+        new Hotel { HotelId =1,HotelName = "Atlantis", Description = "Atlantis The Palm, Dubai is a luxury hotel resort located at the apex of the Palm Jumeirah in the United Arab Emirates. It was the first resort to be built on the island", 
             HotelFacilities = facilities,AddressId =2, StarRating=5, IsActive = true },
-        new Hotel { HotelId =2, Description = "In the heart of Dubai, Holiday Inn Bur Dubai - Embassy District is within a 5-minute drive of Dubai Museum and BurJuman Mall. This 4-star hotel is 2 mi (3.2 km) from Dubai Creek and 3 mi (4.9 km) from Dubai International Convention and Exhibition Centre. Make yourself at home in one of the 210 individually decorated guestrooms, featuring minibars and LCD televisions. ",
+        new Hotel { HotelId =2,HotelName = "Holiday Inn", Description = "In the heart of Dubai, Holiday Inn Bur Dubai - Embassy District is within a 5-minute drive of Dubai Museum and BurJuman Mall. This 4-star hotel is 2 mi (3.2 km) from Dubai Creek and 3 mi (4.9 km) from Dubai International Convention and Exhibition Centre. Make yourself at home in one of the 210 individually decorated guestrooms, featuring minibars and LCD televisions. ",
             HotelFacilities = facilities,AddressId =1, StarRating=4, IsActive = true },
-        new Hotel { HotelId =3, Description = "Novotel World Trade Center is a 4-star luxury hotel less than 5 minutes walk from World Trade Center Metro Station (red line). Located off Sheihk Zayed Road, with 5 minutes to Burj Khalifa (world's tallest building), Dubai Frame, Dubai Financial Center and a few minutes to Jumeriah Beach and the Gold Souq.",
+        new Hotel { HotelId =3,HotelName = "Novotel", Description = "Novotel World Trade Center is a 4-star luxury hotel less than 5 minutes walk from World Trade Center Metro Station (red line). Located off Sheihk Zayed Road, with 5 minutes to Burj Khalifa (world's tallest building), Dubai Frame, Dubai Financial Center and a few minutes to Jumeriah Beach and the Gold Souq.",
             HotelFacilities = facilities, AddressId =3, StarRating=4, IsActive = true },
     };
     context.Hotels.AddRange(hotels);

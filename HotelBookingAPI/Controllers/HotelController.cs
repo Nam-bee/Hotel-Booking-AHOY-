@@ -1,6 +1,7 @@
 ﻿using HotelBookingAPI.DBContext;
 using HotelBookingAPI.RequestModel;
 using HotelBookingAPI.ResponseModel;
+using HotelBookingAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,26 +11,25 @@ namespace HotelBookingAPI.Controllers
     [ApiController]
     public class HotelController : ControllerBase
     {
-        private readonly HotelBookingContext _dbContext;
-        public HotelController(HotelBookingContext dbContext)
+        private readonly IHotelService _hotelService;
+       public HotelController(IHotelService hotelService)
         {
-            _dbContext = dbContext;
+            _hotelService = hotelService;
         }
-
         [HttpGet]
         public ActionResult<List<HotelDetails>> Get()
         {
-            return new List<HotelDetails>();
+            return _hotelService.GetHotelList();
         }
         [HttpGet]
         public ActionResult<List<HotelDetails>> Get(HotelFilter filter)
         {
-            return new List<HotelDetails>();
+            return _hotelService.GetHotelList(filter);
         }
         [HttpGet]
-        public ActionResult<HotelDetails> Get(int id)
+        public ActionResult<HotelDetails> Get(int hotelId)
         {
-            return new HotelDetails();
+            return _hotelService.GetHotelDetails(hotelId);
         }
     }
 }

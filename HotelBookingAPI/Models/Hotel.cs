@@ -5,6 +5,7 @@ namespace HotelBookingAPI.Models
     public class Hotel
     {
         public int HotelId { get; set; }
+        public string HotelName { get; set; }
         public int AddressId { get; set; }
         public string Description { get; set; }
         [ForeignKey("AddressId")]
