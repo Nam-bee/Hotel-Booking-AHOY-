@@ -1,8 +1,12 @@
-﻿namespace HotelBookingAPI.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace HotelBookingAPI.Models
 {
     public class Customer
     {
-        public Guid CustomerId { get; set; }
+        public int CustomerId { get; set; }
+        public int AddressId { get; set; }
+        [ForeignKey("AddressId")]
         public Address AddressDetails { get; set; }
         public string Name { get; set; }
         public DateOnly DateOfBirth { get; set; }

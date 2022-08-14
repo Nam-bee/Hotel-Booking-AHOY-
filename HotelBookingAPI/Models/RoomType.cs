@@ -2,7 +2,7 @@
 {
     public class RoomType
     {
-        public Guid RoomId { get; set; }
+        public int RoomId { get; set; }
         public string RoomName { get; set; }
         public int RoomLengthInFeet { get; set; }
         public int RoomWidthInFeet { get; set; }
