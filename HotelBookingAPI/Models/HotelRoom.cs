@@ -8,7 +8,7 @@ namespace HotelBookingAPI.Models
         public int HotelId { get; set; }
         [ForeignKey("HotelId")]
         public Hotel HotelDetails { get; set; }
-        public Guid RoomId { get; set; }
+        public int RoomId { get; set; }
         [ForeignKey("RoomId")]
         public RoomType RoomDetails { get; set; }
         public double CostPerNight { get; set; }

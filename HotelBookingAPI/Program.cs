@@ -2,9 +2,12 @@ using HotelBookingAPI.DBContext;
 using HotelBookingAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.VisualBasic.FileIO;
 using System.Diagnostics.Metrics;
 using System.IO;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
+using Image = HotelBookingAPI.Models.Image;
 
 var builder = WebApplication.CreateBuilder(args);
 var contextOptions = new DbContextOptionsBuilder<HotelBookingContext>()
@@ -46,9 +49,67 @@ using (var context = new HotelBookingContext(contextOptions))
         new RoomType { RoomId = 1, RoomName = "Delux", RoomLengthInFeet = 15, RoomWidthInFeet=15, MaxAllowedPerson=3, IsActive = true },
         new RoomType { RoomId = 1, RoomName = "Suite", RoomLengthInFeet = 20, RoomWidthInFeet=20, MaxAllowedPerson=3, IsActive = true },
         new RoomType { RoomId = 1, RoomName = "Presidental Suite", RoomLengthInFeet = 30, RoomWidthInFeet=30, MaxAllowedPerson=4, IsActive = true },
-        new RoomType { RoomId = 1, RoomName = "Private Villa", RoomLengthInFeet = 40, RoomWidthInFeet=40, MaxAllowedPerson=5, IsActive = true }
+        new RoomType { RoomId = 1, RoomName = "Private Villa", RoomLengthInFeet = 40, RoomWidthInFeet=40, MaxAllowedPerson=5, IsActive = true },
+        new RoomType { RoomId = 1, RoomName = "Exterior", IsActive = true },
+        new RoomType { RoomId = 1, RoomName = "Washroom", MaxAllowedPerson=5, IsActive = true }
     };
     context.RoomTypes.AddRange(roomTypes);
+    List<HotelRoom> rooms = new List<HotelRoom>{
+        new HotelRoom { HotelRoomId =1, HotelId=1, RoomId=1, CostPerNight=500, CostPerAddonGuest=200, IsActive = true },
+        new HotelRoom { HotelRoomId =2, HotelId=1, RoomId=2, CostPerNight=600, CostPerAddonGuest=250, IsActive = true },
+        new HotelRoom { HotelRoomId =3, HotelId=1, RoomId=3, CostPerNight=700, CostPerAddonGuest=300, IsActive = true },
+        new HotelRoom { HotelRoomId =4, HotelId=1, RoomId=4, CostPerNight=800, CostPerAddonGuest=350, IsActive = true },
+        new HotelRoom { HotelRoomId =5, HotelId=2, RoomId=1, CostPerNight=500, CostPerAddonGuest=200, IsActive = true },
+        new HotelRoom { HotelRoomId =6, HotelId=2, RoomId=2, CostPerNight=600, CostPerAddonGuest=250, IsActive = true },
+        new HotelRoom { HotelRoomId =7, HotelId=2, RoomId=3, CostPerNight=700, CostPerAddonGuest=300, IsActive = true },
+        new HotelRoom { HotelRoomId =8, HotelId=2, RoomId=4, CostPerNight=800, CostPerAddonGuest=350, IsActive = true },
+        new HotelRoom { HotelRoomId =9, HotelId=3, RoomId=1, CostPerNight=500, CostPerAddonGuest=200, IsActive = true },
+        new HotelRoom { HotelRoomId =10, HotelId=3, RoomId=2, CostPerNight=600, CostPerAddonGuest=250, IsActive = true },
+        new HotelRoom { HotelRoomId =11, HotelId=3, RoomId=3, CostPerNight=700, CostPerAddonGuest=300, IsActive = true },
+        new HotelRoom { HotelRoomId =12, HotelId=4, RoomId=4, CostPerNight=800, CostPerAddonGuest=350, IsActive = true },
+        new HotelRoom { HotelRoomId =13, HotelId=1, RoomId=5, IsActive = true },
+        new HotelRoom { HotelRoomId =14, HotelId=1, RoomId=6, IsActive = true },
+        new HotelRoom { HotelRoomId =15, HotelId=2, RoomId=5, IsActive = true },
+        new HotelRoom { HotelRoomId =16, HotelId=2, RoomId=6, IsActive = true },
+        new HotelRoom { HotelRoomId =17, HotelId=3, RoomId=5, IsActive = true },
+        new HotelRoom { HotelRoomId =18, HotelId=3, RoomId=6, IsActive = true }
+    };
+    context.HotelRooms.AddRange(rooms);
+    List<Booking> bookings = new List<Booking>{
+        new Booking { BookingId=1, CustomerId=1, 
+            RoomDetails = new List<HotelRoom>{ rooms.Where(x=>x.RoomId == 2).FirstOrDefault(),
+                rooms.Where(x=>x.RoomId == 3).FirstOrDefault() }, 
+            GuestCount = 2, BookedOn = new DateTime(2022,07,16), 
+            StayStartDate= new DateOnly(2022,07,19), StayEndDate= new DateOnly(2022,07,21),AmountPaid = 1100, 
+            TotalCost = 1100, IsCancelled = false, IsActive = false },
+        new Booking { BookingId=2, CustomerId=3,
+            RoomDetails = new List<HotelRoom>{ rooms.Where(x=>x.RoomId == 5).FirstOrDefault(),
+                rooms.Where(x=>x.RoomId == 6).FirstOrDefault() },
+            GuestCount = 2, BookedOn = new DateTime(2022,07,16),
+            StayStartDate= new DateOnly(2022,08,31), StayEndDate= new DateOnly(2022,9,2),AmountPaid = 500,
+            TotalCost = 900, IsCancelled = false, IsActive = true }
+    };
+    context.Bookings.AddRange(bookings);
+    
+    List<Image> images = new List<Image>{
+        new Image { ImageId=1, HotelId=2, HotelRoomId=5, ImageContent="Delux Room", ImageName="HolidayInnDelux", FileType="jpg", IsActive = true },
+        new Image { ImageId=2, HotelId=2, HotelRoomId=6, ImageContent="Suite Room", ImageName="HolidayInnSuite", FileType="jpg", IsActive = true },
+        new Image { ImageId=3, HotelId=2, HotelRoomId=7, ImageContent="Presidential Suite Room", ImageName="HolidayInnPresedentalSuite", FileType="jpg", IsActive = true },
+        new Image { ImageId=4, HotelId=2, HotelRoomId=8, ImageContent="Villa", ImageName="HolidayInnVilla", FileType="jpg", IsActive = true },
+        new Image { ImageId=5, HotelId=2, HotelRoomId=16, ImageContent="Wash Room", ImageName="HolidayInnWashroom", FileType="jpg", IsActive = true },
+        new Image { ImageId=6, HotelId=2, HotelRoomId=15, ImageContent="Exterior", ImageName="HolidayInnExterior", FileType="jpg", IsActive = true },
+        new Image { ImageId=7, HotelId=3, HotelRoomId=9, ImageContent="Delux Room", ImageName="NovotelDelux", FileType="jpg", IsActive = true },
+        new Image { ImageId=8, HotelId=3, HotelRoomId=10, ImageContent="Suite Room", ImageName="NovotelSuite", FileType="jpg", IsActive = true },
+        new Image { ImageId=9, HotelId=3, HotelRoomId=11, ImageContent="Presidential Suite Room", ImageName="NovotelPresedentalSuite", FileType="jpg", IsActive = true },
+        new Image { ImageId=10, HotelId=3, HotelRoomId=12, ImageContent="Villa", ImageName="NovotelVilla", FileType="jpg", IsActive = true },
+        new Image { ImageId=11, HotelId=3, HotelRoomId=18, ImageContent="Wash Room", ImageName="NovotelWashroom", FileType="jpg", IsActive = true },
+        new Image { ImageId=12, HotelId=3, HotelRoomId=17, ImageContent="Exterior", ImageName="NovotelExterior", FileType="jpg", IsActive = true }
+    };
+    context.Images.AddRange(images);
+    List<Review> reviews = new List<Review>{
+        new Review { ReviewId=1, CustomerId=1, HotelId=2, Rating=4, Description="Best stay ever", ReviewedOn = new DateTime(2022,07,31), IsActive = true },    
+    };
+    context.Customers.AddRange(customers);
     context.SaveChanges();
 
 }

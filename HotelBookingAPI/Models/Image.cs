@@ -5,9 +5,11 @@ namespace HotelBookingAPI.Models
     public class Image
     {
         public int ImageId { get; set; }
-        [ForeignKey("AddressId")]
+        public int HotelId { get; set; }
+        public int HotelRoomId { get; set; }
+        [ForeignKey("HotelRoomId")]
         public HotelRoom HotelRoomDetails { get; set; }
-        [ForeignKey("AddressId")]
+        [ForeignKey("HotelId")]
         public Hotel HotelDetails { get; set; }
         public string ImageContent { get; set; }
         public string ImageName { get; set; }
