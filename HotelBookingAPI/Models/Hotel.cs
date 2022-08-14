@@ -11,6 +11,7 @@ namespace HotelBookingAPI.Models
         public Address HotelAddress { get; set; }
         public bool IsActive { get; set; }
         public int StarRating { get; set; }
+        public List<Facility> HotelFacilities { get; set; }
 
     }
 }

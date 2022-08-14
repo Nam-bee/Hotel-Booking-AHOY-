@@ -34,11 +34,21 @@ using (var context = new HotelBookingContext(contextOptions))
         new Customer { CustomerId=2, Name="Kate", DateOfBirth= new DateOnly(1995,3,18), AddressId =4, EmailId = "kate@demoahoy.com", ContactNumber="7654321", IsActive = true }
     };
     context.Customers.AddRange(customers);
+    List<Facility> facilities = new List<Facility>{
+        new Facility { FacilityId=1,FacilityName="Wifi", FacilityDescription = "Wifi Description", IsActive = true },
+        new Facility { FacilityId=2,FacilityName="Parking", FacilityDescription = "Free Parking", IsActive = true },
+        new Facility { FacilityId=3,FacilityName="Breakfast", FacilityDescription = "Wifi Breakfast", IsActive = true },
+        new Facility { FacilityId=4,FacilityName="SPA", FacilityDescription = "Inhouse SPA", IsActive = true },
+        new Facility { FacilityId=5,FacilityName="Swimming Pool", FacilityDescription = "Swimming Pool", IsActive = true },
+       };
+    context.Facilities.AddRange(facilities);
     List<Hotel> hotels = new List<Hotel>{
-        new Hotel { HotelId =1, Description = "Atlantis The Palm, Dubai is a luxury hotel resort located at the apex of the Palm Jumeirah in the United Arab Emirates. It was the first resort to be built on the island", AddressId =2, StarRating=5, IsActive = true },
+        new Hotel { HotelId =1, Description = "Atlantis The Palm, Dubai is a luxury hotel resort located at the apex of the Palm Jumeirah in the United Arab Emirates. It was the first resort to be built on the island", 
+            HotelFacilities = facilities,AddressId =2, StarRating=5, IsActive = true },
         new Hotel { HotelId =2, Description = "In the heart of Dubai, Holiday Inn Bur Dubai - Embassy District is within a 5-minute drive of Dubai Museum and BurJuman Mall. This 4-star hotel is 2 mi (3.2 km) from Dubai Creek and 3 mi (4.9 km) from Dubai International Convention and Exhibition Centre. Make yourself at home in one of the 210 individually decorated guestrooms, featuring minibars and LCD televisions. ",
-            AddressId =1, StarRating=4, IsActive = true },
-        new Hotel { HotelId =3, Description = "Novotel World Trade Center is a 4-star luxury hotel less than 5 minutes walk from World Trade Center Metro Station (red line). Located off Sheihk Zayed Road, with 5 minutes to Burj Khalifa (world's tallest building), Dubai Frame, Dubai Financial Center and a few minutes to Jumeriah Beach and the Gold Souq.", AddressId =3, StarRating=4, IsActive = true },
+            HotelFacilities = facilities,AddressId =1, StarRating=4, IsActive = true },
+        new Hotel { HotelId =3, Description = "Novotel World Trade Center is a 4-star luxury hotel less than 5 minutes walk from World Trade Center Metro Station (red line). Located off Sheihk Zayed Road, with 5 minutes to Burj Khalifa (world's tallest building), Dubai Frame, Dubai Financial Center and a few minutes to Jumeriah Beach and the Gold Souq.",
+            HotelFacilities = facilities, AddressId =3, StarRating=4, IsActive = true },
     };
     context.Hotels.AddRange(hotels);
     List<RoomType> roomTypes = new List<RoomType>{
@@ -99,13 +109,20 @@ using (var context = new HotelBookingContext(contextOptions))
         new Image { ImageId=9, HotelId=3, HotelRoomId=11, ImageContent="Presidential Suite Room", ImageName="NovotelPresedentalSuite", FileType="jpg", IsActive = true },
         new Image { ImageId=10, HotelId=3, HotelRoomId=12, ImageContent="Villa", ImageName="NovotelVilla", FileType="jpg", IsActive = true },
         new Image { ImageId=11, HotelId=3, HotelRoomId=18, ImageContent="Wash Room", ImageName="NovotelWashroom", FileType="jpg", IsActive = true },
-        new Image { ImageId=12, HotelId=3, HotelRoomId=17, ImageContent="Exterior", ImageName="NovotelExterior", FileType="jpg", IsActive = true }
+        new Image { ImageId=12, HotelId=3, HotelRoomId=17, ImageContent="Exterior", ImageName="NovotelExterior", FileType="jpg", IsActive = true },
+        new Image { ImageId=13, ImageContent="Burj Khalifa", ImageName="Burjkhalifa", FileType="jpg", IsActive = true },
+        new Image { ImageId=14, ImageContent="Dubai Mall", ImageName="DubaiMall", FileType="jpg", IsActive = true }
     };
     context.Images.AddRange(images);
     List<Review> reviews = new List<Review>{
         new Review { ReviewId=1, CustomerId=1, HotelId=2, Rating=4, Description="Best stay ever", ReviewedOn = new DateTime(2022,07,31), IsActive = true },    
     };
     context.Customers.AddRange(customers);
+    List<Destination> destinations = new List<Destination>{
+        new Destination { DestintionId=1, CityId = 1, DestinationName="Burj Khalifa", ImageId=13, IsActive = true },
+        new Destination { DestintionId=2, CityId = 1, DestinationName="Dubai Mall", ImageId=14, IsActive = true }
+    };
+    context.Destinations.AddRange(destinations);
     context.SaveChanges();
 
 }

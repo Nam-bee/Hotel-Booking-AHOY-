@@ -13,12 +13,14 @@ namespace HotelBookingAPI.DBContext
         public DbSet<City> Cities { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Facility> Facilities { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<RoomType> RoomTypes { get; set; }
         public DbSet<HotelRoom> HotelRooms { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Booking> Bookings { get; set; }
-        
+        public DbSet<Destination> Destinations { get; set; }
+
     }
 }
