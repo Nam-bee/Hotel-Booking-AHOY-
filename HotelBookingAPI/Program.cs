@@ -1,15 +1,11 @@
 using HotelBookingAPI.DBContext;
 using HotelBookingAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.VisualBasic.FileIO;
-using System.Diagnostics.Metrics;
-using System.IO;
-using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
 using Image = HotelBookingAPI.Models.Image;
 
 var builder = WebApplication.CreateBuilder(args);
+
+#region data Initialization
 var contextOptions = new DbContextOptionsBuilder<HotelBookingContext>()
    .UseInMemoryDatabase(databaseName: "Test")
    .Options;
@@ -113,6 +109,7 @@ using (var context = new HotelBookingContext(contextOptions))
     context.SaveChanges();
 
 }
+#endregion data Initialization 
 
 // Add services to the container.
 
