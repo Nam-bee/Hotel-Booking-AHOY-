@@ -1,5 +1,6 @@
 using HotelBookingAPI.DBContext;
 using HotelBookingAPI.Models;
+using HotelBookingAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Image = HotelBookingAPI.Models.Image;
 
@@ -44,20 +45,37 @@ using (var context = new HotelBookingContext(contextOptions))
     context.Facilities.AddRange(facilities);
     List<Hotel> hotels = new List<Hotel>{
         new Hotel { HotelId =1,HotelName = "Atlantis", Description = "Atlantis The Palm, Dubai is a luxury hotel resort located at the apex of the Palm Jumeirah in the United Arab Emirates. It was the first resort to be built on the island", 
-            HotelFacilities = facilities,AddressId =2, StarRating=5, IsActive = true },
+           AddressId =2, StarRating=5, IsActive = true },
         new Hotel { HotelId =2,HotelName = "Holiday Inn", Description = "In the heart of Dubai, Holiday Inn Bur Dubai - Embassy District is within a 5-minute drive of Dubai Museum and BurJuman Mall. This 4-star hotel is 2 mi (3.2 km) from Dubai Creek and 3 mi (4.9 km) from Dubai International Convention and Exhibition Centre. Make yourself at home in one of the 210 individually decorated guestrooms, featuring minibars and LCD televisions. ",
-            HotelFacilities = facilities,AddressId =1, StarRating=4, IsActive = true },
+           AddressId =1, StarRating=4, IsActive = true },
         new Hotel { HotelId =3,HotelName = "Novotel", Description = "Novotel World Trade Center is a 4-star luxury hotel less than 5 minutes walk from World Trade Center Metro Station (red line). Located off Sheihk Zayed Road, with 5 minutes to Burj Khalifa (world's tallest building), Dubai Frame, Dubai Financial Center and a few minutes to Jumeriah Beach and the Gold Souq.",
-            HotelFacilities = facilities, AddressId =3, StarRating=4, IsActive = true },
+             AddressId =3, StarRating=4, IsActive = true },
     };
     context.Hotels.AddRange(hotels);
+    List<HotelFacility> hotelFacilities = new List<HotelFacility>{
+        new HotelFacility { HotelFacilityId = 1, HotelId =1, FacilityId =1, IsActive = true },
+        new HotelFacility { HotelFacilityId = 2, HotelId =1, FacilityId =2, IsActive = true },
+        new HotelFacility { HotelFacilityId = 3, HotelId =1, FacilityId =3, IsActive = true },
+        new HotelFacility { HotelFacilityId = 4, HotelId =1, FacilityId =4, IsActive = true },
+        new HotelFacility { HotelFacilityId = 5, HotelId =2, FacilityId =1, IsActive = true },
+        new HotelFacility { HotelFacilityId = 6, HotelId =2, FacilityId =2, IsActive = true },
+        new HotelFacility { HotelFacilityId = 7, HotelId =2, FacilityId =3, IsActive = true },
+        new HotelFacility { HotelFacilityId = 8, HotelId =2, FacilityId =4, IsActive = true },
+        new HotelFacility { HotelFacilityId = 9, HotelId =2, FacilityId =5, IsActive = true },
+        new HotelFacility { HotelFacilityId = 10, HotelId =3, FacilityId =1, IsActive = true },
+        new HotelFacility { HotelFacilityId = 11, HotelId =3, FacilityId =2, IsActive = true },
+        new HotelFacility { HotelFacilityId = 12, HotelId =3, FacilityId =3, IsActive = true },
+        new HotelFacility { HotelFacilityId = 13, HotelId =3, FacilityId =4, IsActive = true }
+
+    };
+    context.HotelFacilities.AddRange(hotelFacilities);
     List<RoomType> roomTypes = new List<RoomType>{
         new RoomType { RoomId = 1, RoomName = "Delux", RoomLengthInFeet = 15, RoomWidthInFeet=15, MaxAllowedPerson=3, IsActive = true },
-        new RoomType { RoomId = 1, RoomName = "Suite", RoomLengthInFeet = 20, RoomWidthInFeet=20, MaxAllowedPerson=3, IsActive = true },
-        new RoomType { RoomId = 1, RoomName = "Presidental Suite", RoomLengthInFeet = 30, RoomWidthInFeet=30, MaxAllowedPerson=4, IsActive = true },
-        new RoomType { RoomId = 1, RoomName = "Private Villa", RoomLengthInFeet = 40, RoomWidthInFeet=40, MaxAllowedPerson=5, IsActive = true },
-        new RoomType { RoomId = 1, RoomName = "Exterior", IsActive = true },
-        new RoomType { RoomId = 1, RoomName = "Washroom", MaxAllowedPerson=5, IsActive = true }
+        new RoomType { RoomId = 2, RoomName = "Suite", RoomLengthInFeet = 20, RoomWidthInFeet=20, MaxAllowedPerson=3, IsActive = true },
+        new RoomType { RoomId = 3, RoomName = "Presidental Suite", RoomLengthInFeet = 30, RoomWidthInFeet=30, MaxAllowedPerson=4, IsActive = true },
+        new RoomType { RoomId = 4, RoomName = "Private Villa", RoomLengthInFeet = 40, RoomWidthInFeet=40, MaxAllowedPerson=5, IsActive = true },
+        new RoomType { RoomId = 5, RoomName = "Exterior", IsActive = true },
+        new RoomType { RoomId = 6, RoomName = "Washroom", MaxAllowedPerson=5, IsActive = true }
     };
     context.RoomTypes.AddRange(roomTypes);
     List<HotelRoom> rooms = new List<HotelRoom>{
@@ -83,15 +101,35 @@ using (var context = new HotelBookingContext(contextOptions))
     context.HotelRooms.AddRange(rooms);
     List<Booking> bookings = new List<Booking>{
         new Booking { BookingId=1, CustomerId=1, 
-            RoomDetails = new List<HotelRoom>{ rooms.Where(x=>x.RoomId == 2).FirstOrDefault(),
-                rooms.Where(x=>x.RoomId == 3).FirstOrDefault() }, 
-            GuestCount = 2, BookedOn = new DateTime(2022,07,16), 
+            RoomDetails = new List<RoomBookingDetail>{ new RoomBookingDetail
+            {
+                RoomBookingId=1,
+                BookingId =1,
+                HotelRoomId =  2,
+                GuestCount = 2
+            },
+                new RoomBookingDetail{
+                RoomBookingId=1,
+                BookingId =1,
+                HotelRoomId =  2,
+                GuestCount = 2
+            } }, BookedOn = new DateTime(2022,07,16), 
             StayStartDate= new DateOnly(2022,07,19), StayEndDate= new DateOnly(2022,07,21),AmountPaid = 1100, 
             TotalCost = 1100, IsCancelled = false, IsActive = false },
         new Booking { BookingId=2, CustomerId=3,
-            RoomDetails = new List<HotelRoom>{ rooms.Where(x=>x.RoomId == 5).FirstOrDefault(),
-                rooms.Where(x=>x.RoomId == 6).FirstOrDefault() },
-            GuestCount = 2, BookedOn = new DateTime(2022,07,16),
+           RoomDetails = new List<RoomBookingDetail>{ new RoomBookingDetail
+            {
+                RoomBookingId=1,
+                BookingId =1,
+                HotelRoomId =  5,
+                GuestCount = 2
+            },
+                new RoomBookingDetail{
+                RoomBookingId=1,
+                BookingId =1,
+                HotelRoomId =  6,
+                GuestCount = 2
+            } }, BookedOn = new DateTime(2022,07,16),
             StayStartDate= new DateOnly(2022,08,31), StayEndDate= new DateOnly(2022,9,2),AmountPaid = 500,
             TotalCost = 900, IsCancelled = false, IsActive = true }
     };
@@ -133,6 +171,7 @@ using (var context = new HotelBookingContext(contextOptions))
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddDbContext<HotelBookingContext>( options => options.UseInMemoryDatabase("Test"));
+builder.Services.AddScoped<IHotelService, HotelService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

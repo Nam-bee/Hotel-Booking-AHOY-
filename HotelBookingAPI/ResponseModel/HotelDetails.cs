@@ -9,6 +9,7 @@ namespace HotelBookingAPI.ResponseModel
         public List<Image> HotelImages { get; set; }
         public List<HotelRoom> HotelRooms { get; set; }
         public List<Destination> DestinationNearBy { get; set; }
+        public List<HotelFacility> HotelFacilities { get; set; }
         public double Distance { get; set; }
     }
 }

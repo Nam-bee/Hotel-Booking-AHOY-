@@ -12,21 +12,21 @@ namespace HotelBookingAPI.Controllers
     public class HotelController : ControllerBase
     {
         private readonly IHotelService _hotelService;
-       public HotelController(IHotelService hotelService)
+        public HotelController(IHotelService hotelService)
         {
             _hotelService = hotelService;
         }
+        //[HttpGet]
+        //public ActionResult<List<HotelDetails>> Get()
+        //{
+        //    return _hotelService.GetHotelList();
+        //}
         [HttpGet]
-        public ActionResult<List<HotelDetails>> Get()
+        public ActionResult<List<HotelDetails>> Get(string? cityName = null, string? hotelName = null, int? distance =0)
         {
-            return _hotelService.GetHotelList();
+            return _hotelService.GetHotelList(cityName, hotelName, distance.Value);
         }
-        [HttpGet]
-        public ActionResult<List<HotelDetails>> Get(HotelFilter filter)
-        {
-            return _hotelService.GetHotelList(filter);
-        }
-        [HttpGet]
+        [HttpGet("{hotelId}")]
         public ActionResult<HotelDetails> Get(int hotelId)
         {
             return _hotelService.GetHotelDetails(hotelId);

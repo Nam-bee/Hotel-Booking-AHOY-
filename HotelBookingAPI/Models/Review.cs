@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotelBookingAPI.Models
 {
     public class Review
     {
+        [Key]
         public int ReviewId { get; set; }
         public int CustomerId { get; set; }
         [ForeignKey("CustomerId")]

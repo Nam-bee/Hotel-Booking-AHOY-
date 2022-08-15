@@ -3,18 +3,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotelBookingAPI.Models
 {
-    public class HotelRoom
+    public class HotelFacility
     {
         [Key]
-        public int HotelRoomId { get; set; }
+        public int HotelFacilityId { get; set; }
         public int HotelId { get; set; }
         [ForeignKey("HotelId")]
         public Hotel HotelDetails { get; set; }
-        public int RoomId { get; set; }
-        [ForeignKey("RoomId")]
-        public RoomType RoomDetails { get; set; }
-        public double CostPerNight { get; set; }
-        public double CostPerAddonGuest { get; set; }
+        public int FacilityId { get; set; }
+        [ForeignKey("FacilityId")]
+        public Facility FacilityDetails { get; set; }
         public bool IsActive { get; set; }
     }
 }
+

@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotelBookingAPI.Models
 {
     public class Image
     {
+        [Key]
         public int ImageId { get; set; }
         public int HotelId { get; set; }
         public int HotelRoomId { get; set; }
