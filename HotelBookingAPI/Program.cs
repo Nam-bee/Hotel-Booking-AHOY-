@@ -116,7 +116,7 @@ using (var context = new HotelBookingContext(contextOptions))
                 GuestCount = 2,
                 IsActive = true
             } }, BookedOn = new DateTime(2022,07,16), 
-            StayStartDate= new DateOnly(2022,07,19), StayEndDate= new DateOnly(2022,07,21),AmountPaid = 1100, 
+            StayStartDate= new DateTime(2022,07,19), StayEndDate= new DateTime(2022,07,21),AmountPaid = 1100, 
             TotalCost = 1100, IsCancelled = false, IsActive = false },
         new Booking { BookingId=2, CustomerId=3,
            RoomDetails = new List<RoomBookingDetail>{ new RoomBookingDetail
@@ -134,7 +134,7 @@ using (var context = new HotelBookingContext(contextOptions))
                 GuestCount = 2,
                 IsActive = true
             } }, BookedOn = new DateTime(2022,07,16),
-            StayStartDate= new DateOnly(2022,08,31), StayEndDate= new DateOnly(2022,9,2),AmountPaid = 500,
+            StayStartDate= new DateTime(2022,08,31), StayEndDate= new DateTime(2022,9,2),AmountPaid = 500,
             TotalCost = 900, IsCancelled = false, IsActive = true }
     };
     context.Bookings.AddRange(bookings);

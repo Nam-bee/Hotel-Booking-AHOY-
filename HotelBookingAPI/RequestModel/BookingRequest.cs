@@ -8,8 +8,8 @@ namespace HotelBookingAPI.RequestModel
         public int CustomerId { get; set; }
         //key represents roomId and valude represents GuestCount
         public Dictionary<int, int> RoomDetails { get; set; }
-        public DateOnly StayStartDate { get; set; }
-        public DateOnly StayEndDate { get; set; }
+        public DateTime StayStartDate { get; set; }
+        public DateTime StayEndDate { get; set; }
         public double AmountPaid { get; set; }
     }
 }

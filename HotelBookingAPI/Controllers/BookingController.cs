@@ -21,5 +21,15 @@ namespace HotelBookingAPI.Controllers
         {
             return _bookingService.CreateBooking(bookingRequest);
         }
+        [HttpGet]
+        public ActionResult<List<Booking>> Get(int customerId)
+        {
+            return _bookingService.GetCustomerBookingDetails(customerId);
+        }
+        [HttpDelete]
+        public ActionResult<int> Delete(int bookingId)
+        {
+            return _bookingService.CancelBooking(bookingId);
+        }
     }
 }

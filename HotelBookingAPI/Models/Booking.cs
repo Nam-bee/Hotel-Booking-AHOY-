@@ -12,8 +12,8 @@ namespace HotelBookingAPI.Models
         public Customer CustomerDetails { get; set; }
         public List<RoomBookingDetail> RoomDetails { get; set; }
         public DateTime BookedOn { get; set; }
-        public DateOnly StayStartDate { get; set; }
-        public DateOnly StayEndDate { get; set; }
+        public DateTime StayStartDate { get; set; }
+        public DateTime StayEndDate { get; set; }
         public double AmountPaid { get; set; }
         public double TotalCost { get; set; }
         public bool IsActive { get; set; }

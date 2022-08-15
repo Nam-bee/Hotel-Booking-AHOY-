@@ -26,7 +26,7 @@ namespace HotelBookingAPI.Services
                 BookedOn = DateTime.UtcNow,
                 IsActive =true,
                 IsCancelled =false,
-                TotalCost = CalculateTotalCost(bookingRequest.RoomDetails, DaysDifference(bookingRequest.StayEndDate, bookingRequest.StayStartDate))
+                TotalCost = CalculateTotalCost(bookingRequest.RoomDetails, (bookingRequest.StayEndDate- bookingRequest.StayStartDate).Days)
             };
             _dbContext.Bookings.Add(newBooking);
             CreateBookingRoomDetails(bookingId, bookingRequest.RoomDetails);
@@ -38,6 +38,18 @@ namespace HotelBookingAPI.Services
             };
         }
 
+        public List<Booking> GetCustomerBookingDetails(int customerID)
+        {
+            return _dbContext.Bookings.Where(x => x.CustomerId == customerID)
+                .Include(a => a.RoomDetails).ToList();
+        }
+        public int CancelBooking(int bookingId)
+        {
+            var booking =  _dbContext.Bookings.Where(x => x.CustomerId == bookingId).FirstOrDefault();
+            booking.IsCancelled = true;
+            _dbContext.SaveChanges();
+            return booking.BookingId;
+        }
         private double CalculateTotalCost(Dictionary<int, int> roomDetails, int days)
         {
             var totalCost = 0.0;
@@ -53,10 +65,7 @@ namespace HotelBookingAPI.Services
             return totalCost;
         }
 
-        private int DaysDifference(DateOnly dateOnly1, DateOnly dateOnly2)
-        {
-            return (new DateTime(dateOnly1.Year, dateOnly1.Month, dateOnly1.Day) - new DateTime(dateOnly2.Year, dateOnly2.Month, dateOnly2.Day)).Days;
-        }
+       
 
         private void CreateBookingRoomDetails(int bookingId, Dictionary<int, int> roomDetails)
         {
