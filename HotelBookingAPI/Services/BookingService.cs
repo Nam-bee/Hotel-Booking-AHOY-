@@ -69,7 +69,8 @@ namespace HotelBookingAPI.Services
                         BookingId = bookingId,
                         HotelRoomId = detail.Key,
                         GuestCount = detail.Value,
-                        RoomBookingId = roombookingId
+                        RoomBookingId = roombookingId,
+                        IsActive = true
                     }
                     );
             }

@@ -16,11 +16,7 @@ namespace HotelBookingAPI.Controllers
         {
             _hotelService = hotelService;
         }
-        //[HttpGet]
-        //public ActionResult<List<HotelDetails>> Get()
-        //{
-        //    return _hotelService.GetHotelList();
-        //}
+      
         [HttpGet]
         public ActionResult<List<HotelDetails>> Get(string? cityName = null, string? hotelName = null, int? distance =0)
         {
